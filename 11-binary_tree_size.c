@@ -1,26 +1,20 @@
 #include "binary_trees.h"
 
 /**
- * binary_trees_ancestor - Finds the lowest common ancestor of two nodes.
- * @first: Pointer to the first node.
- * @second: Pointer to the second node.
+ * binary_tree_size - Measures the size of a binary tree.
+ * @tree: A pointer to the root node of the tree to measure the size of.
  *
- * Return: If no common ancestors return NULL, else return common ancestor.
+ * Return: The size of the tree.
  */
-binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
-		const binary_tree_t *second)
+size_t binary_tree_size(const binary_tree_t *tree)
 {
-	binary_tree_t *mom, *pop;
+	size_t size = 0;
 
-	if (!first || !second)
-		return (NULL);
-	if (first == second)
-		return ((binary_tree_t *)first);
-
-	mom = first->parent, pop = second->parent;
-	if (first == pop || !mom || (!mom->parent && pop))
-		return (binary_trees_ancestor(first, pop));
-	else if (mom == second || !pop || (!pop->parent && mom))
-		return (binary_trees_ancestor(mom, second));
-	return (binary_trees_ancestor(mom, pop));
+	if (tree)
+	{
+		size += 1;
+		size += binary_tree_size(tree->left);
+		size += binary_tree_size(tree->right);
+	}
+	return (size);
 }
